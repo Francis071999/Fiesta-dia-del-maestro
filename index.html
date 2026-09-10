@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Bienvenidos a la Fiesta del Día del Maestro!</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Audio de fondo -->
+  <audio id="party-audio" src="musica/cancion.mp3.mp3" loop preload="auto"></audio>
+
+  <!-- PORTADA DE BIENVENIDA -->
+  <div id="welcome-screen" class="welcome-screen">
+    <div class="welcome-bg-animation"></div>
+    <div class="welcome-content">
+      <img src="carpeta/muni.jpg" alt="Logo Municipalidad" class="muni-logo-welcome">
+
+      <div class="welcome-badge">🎉 MUNICIPALIDAD DE BELLA VISTA 🎉</div>
+      <h1 class="welcome-title">FIESTA DEL DÍA DEL MAESTRO</h1>
+      <p class="welcome-subtitle">Ingresa para conocer la ubicación de tu mesa</p>
+      
+      <button id="enter-btn" class="enter-btn">
+        <span>Ingresar</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL DEL SALÓN -->
+  <div id="main-content" class="main-content hidden">
+    <header class="header">
+      <h1>¡BIENVENIDOS A LA FIESTA DEL DIA DEL MAESTRO!</h1>
+      <p>Consulta tu mesa y asiento asignado</p>
+    </header>
+
+    <main class="container">
+      
+      <!-- Panel de Estadísticas -->
+      <section class="stats-container">
+        <div class="stat-card">
+          <span class="stat-label">Total</span>
+          <span id="stat-total" class="stat-value">0</span>
+        </div>
+        <div class="stat-card stat-present">
+          <span class="stat-label">Presentes</span>
+          <span id="stat-present" class="stat-value">0</span>
+        </div>
+        <div class="stat-card stat-absent">
+          <span class="stat-label">Ausentes</span>
+          <span id="stat-absent" class="stat-value">0</span>
+        </div>
+        <div class="stat-card stat-pending">
+          <span class="stat-label">Pendientes</span>
+          <span id="stat-pending" class="stat-value">0</span>
+        </div>
+      </section>
+
+      <!-- Tarjeta del invitado -->
+      <section id="guest-card" class="guest-card hidden">
+        <h2 id="guest-name">Nombre del Invitado</h2>
+        <div class="info-badge">
+          <div class="info-item">
+            <span class="label">Mesa</span>
+            <span id="guest-table" class="value">0</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Asiento</span>
+            <span id="guest-seat" class="value">0</span>
+          </div>
+        </div>
+        <p class="instruction">Tu mesa está resaltada en el plano a continuación</p>
+      </section>
+
+      <!-- Buscador -->
+      <section id="search-section" class="search-section">
+        <div class="search-box">
+          <p>Busca un invitado o filtra por estado:</p>
+          <div class="input-group">
+            <input type="text" id="search-input" placeholder="Ingresa nombre o apellido...">
+            <button id="search-btn">Buscar</button>
+          </div>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="present">Ver Presentes</button>
+            <button class="filter-btn" data-filter="absent">Ver Ausentes</button>
+            <button class="filter-btn" data-filter="pending">Ver Pendientes</button>
+          </div>
+          <div id="search-results" class="results-list"></div>
+        </div>
+      </section>
+
+      <!-- Plano del Salón -->
+      <section class="venue-container">
+        <img src="carpeta/muni.jpg" alt="Logo Municipalidad" class="muni-logo-venue">
+
+        <div class="venue-header">
+          <div class="stage">ESCENARIO</div>
+        </div>
+
+        <div class="map-body">
+          <!-- Sector Superior: 4 columnas con pista de baile en el centro -->
+          <div class="top-sector">
+            <div class="side-block">
+              <div id="col-1" class="column-grid"></div>
+              <div id="col-2" class="column-grid"></div>
+            </div>
+
+            <div class="dance-floor">
+              <span>PISTA DE BAILE</span>
+            </div>
+
+            <div class="side-block">
+              <div id="col-3" class="column-grid"></div>
+              <div id="col-4" class="column-grid"></div>
+            </div>
+          </div>
+
+          <!-- Sector Inferior: Bloques 3x2 a la izquierda y derecha -->
+          <div class="bottom-sector">
+            <div id="bottom-left" class="grid-3x2"></div>
+            <div class="dance-floor-spacer"></div>
+            <div id="bottom-right" class="grid-3x2"></div>
+          </div>
+        </div>
+
+        <!-- Pie del Plano -->
+        <div class="venue-footer">
+          <div class="bathroom-box">BAÑOS</div>
+          <div class="catering-box">CARPA CATERING</div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 Todos los derechos reservados. Desarrollado por <strong>Francis Osores Vergara</strong></p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
