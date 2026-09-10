@@ -1,4 +1,7 @@
-// Datos de Invitados
+// Cargar estados guardados en localStorage al iniciar
+const savedStatuses = JSON.parse(localStorage.getItem("guestStatuses")) || {};
+
+// Aplicar los estados guardados al arreglo de invitados
 const guests = [
   { id: "1", nombre: "CAROLA GOMEZ", mesaNumero: 1 },
   { id: "2", nombre: "SILVIA FLORES", mesaNumero: 1 },
@@ -394,17 +397,17 @@ const guests = [
   { id: "392", nombre: "MIRIAN LOPEZ", mesaNumero: 37 },
   { id: "393", nombre: "NATALI GUERRERO", mesaNumero: 37 },
   { id: "394", nombre: "LUJAN JUAREZ", mesaNumero: 37 },
-];
+].map(guest => ({
+  ...guest,
+  status: savedStatuses[guest.id] || "pending"
+}));
 
-// Configuración Exacta del Plano Según la Imagen
+// Configuración Exacta del Plano
 const tableLayout = {
-  // Columnas verticales principales (Mesas 1 a 28)
   "col-1": [1, 3, 5, 7, 9, 11, 13],
   "col-2": [2, 4, 6, 8, 10, 12, 14],
   "col-3": [15, 17, 19, 21, 23, 25, 27],
   "col-4": [16, 18, 20, 22, 24, 26, 28],
-
-  // Cuadrículas inferiores (3 columnas x 2 filas a cada lado)
   "bottom-left": [29, 30, 31, 32, 33, 34],
   "bottom-right": [35, 36, 37, 38, 39, 40]
 };
@@ -418,7 +421,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupEvents();
 });
 
-// Inicializa el botón de la Portada
 function initWelcomeScreen() {
   const enterBtn = document.getElementById("enter-btn");
   const welcomeScreen = document.getElementById("welcome-screen");
@@ -427,7 +429,7 @@ function initWelcomeScreen() {
 
   enterBtn.addEventListener("click", () => {
     if (audio) {
-      audio.play().catch(() => console.log("Reproducción automática bloqueada por navegador."));
+      audio.play().catch(() => console.log("Audio no reproducido automáticamente."));
     }
 
     welcomeScreen.classList.add("fade-out");
@@ -439,7 +441,6 @@ function initWelcomeScreen() {
   });
 }
 
-// Genera las 40 mesas y sus sillas en el plano exacto
 function renderVenueMap() {
   for (const [containerId, tableNumbers] of Object.entries(tableLayout)) {
     const container = document.getElementById(containerId);
@@ -455,7 +456,6 @@ function renderVenueMap() {
       circle.innerText = num;
       tableWrapper.appendChild(circle);
 
-      // 10 sillas por mesa
       const totalChairs = 10;
       const radius = 26;
       for (let i = 0; i < totalChairs; i++) {
@@ -474,7 +474,6 @@ function renderVenueMap() {
   }
 }
 
-// Revisa parámetros por URL
 function checkUrlParams() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
@@ -486,7 +485,6 @@ function checkUrlParams() {
   }
 }
 
-// Resalta la mesa del invitado seleccionado
 function selectGuest(guest) {
   const card = document.getElementById("guest-card");
   document.getElementById("guest-name").innerText = guest.nombre;
@@ -498,7 +496,7 @@ function selectGuest(guest) {
     if (el.dataset.tableNumber == guest.mesaNumero) {
       el.classList.add("highlight");
       el.classList.remove("dimmed");
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
     } else {
       el.classList.add("dimmed");
       el.classList.remove("highlight");
@@ -506,7 +504,6 @@ function selectGuest(guest) {
   });
 }
 
-// Configura los eventos del buscador y filtros
 function setupEvents() {
   const searchInput = document.getElementById("search-input");
   const searchBtn = document.getElementById("search-btn");
@@ -524,7 +521,6 @@ function setupEvents() {
   });
 }
 
-// Búsqueda y filtrado
 function performSearch() {
   const query = document.getElementById("search-input").value.toLowerCase().trim();
   const resultsContainer = document.getElementById("search-results");
@@ -581,10 +577,17 @@ function performSearch() {
   });
 }
 
+// Guarda el estado en localStorage
 function setGuestStatus(id, newStatus) {
   const guest = guests.find(g => g.id === id);
   if (guest) {
     guest.status = (guest.status === newStatus) ? 'pending' : newStatus;
+
+    // Actualizar objeto guardado en localStorage
+    const stored = JSON.parse(localStorage.getItem("guestStatuses")) || {};
+    stored[id] = guest.status;
+    localStorage.setItem("guestStatuses", JSON.stringify(stored));
+
     updateStats();
     performSearch();
   }
