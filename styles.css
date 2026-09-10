@@ -304,6 +304,7 @@ body {
   justify-content: center;
   gap: 8px;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 .filter-btn {
@@ -376,7 +377,7 @@ body {
 .btn-present { background: #22c55e; color: #0f172a; }
 .btn-absent { background: #ef4444; color: #ffffff; }
 
-/* PLANO DEL SALÓN - DISEÑO DE LA IMAGEN */
+/* PLANO DEL SALÓN CON DESPLAZAMIENTO FLUIDO EN MÓVILES */
 .venue-container {
   position: relative;
   background: #182232;
@@ -384,6 +385,7 @@ body {
   padding: 1.5rem 1rem;
   border: 1px solid #334155;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .muni-logo-venue {
@@ -401,6 +403,7 @@ body {
   display: flex;
   justify-content: center;
   margin-bottom: 1.8rem;
+  min-width: 320px;
 }
 
 .stage {
@@ -422,6 +425,8 @@ body {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  min-width: max-content;
+  margin: 0 auto;
 }
 
 .top-sector {
@@ -531,6 +536,7 @@ body {
   padding-top: 1rem;
   border-top: 1px dashed #334155;
   gap: 15px;
+  min-width: 320px;
 }
 
 .bathroom-box {
